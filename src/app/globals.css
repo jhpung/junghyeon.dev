@@ -1,0 +1,208 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Design System: Beige + Terracotta Palette */
+:root {
+  --background: oklch(96.5% 0.008 85);
+  --foreground: oklch(25% 0.015 55);
+  --card: oklch(98% 0.006 85);
+  --card-foreground: oklch(25% 0.015 55);
+  --primary: oklch(55% 0.12 45);
+  --primary-foreground: oklch(97% 0.006 85);
+  --secondary: oklch(93% 0.01 85);
+  --secondary-foreground: oklch(30% 0.015 55);
+  --muted: oklch(93% 0.01 85);
+  --muted-foreground: oklch(50% 0.01 55);
+  --accent: oklch(93% 0.01 85);
+  --accent-foreground: oklch(25% 0.015 55);
+  --destructive: oklch(55% 0.2 25);
+  --border: oklch(89% 0.01 85);
+  --input: oklch(89% 0.01 85);
+  --ring: oklch(55% 0.12 45);
+  --radius: 0.5rem;
+}
+
+.dark {
+  --background: oklch(17% 0.01 55);
+  --foreground: oklch(90% 0.008 85);
+  --card: oklch(19% 0.01 55);
+  --card-foreground: oklch(90% 0.008 85);
+  --primary: oklch(68% 0.12 45);
+  --primary-foreground: oklch(17% 0.01 55);
+  --secondary: oklch(24% 0.01 55);
+  --secondary-foreground: oklch(88% 0.008 85);
+  --muted: oklch(24% 0.01 55);
+  --muted-foreground: oklch(60% 0.008 55);
+  --accent: oklch(24% 0.01 55);
+  --accent-foreground: oklch(88% 0.008 85);
+  --destructive: oklch(60% 0.2 25);
+  --border: oklch(30% 0.01 55);
+  --input: oklch(30% 0.01 55);
+  --ring: oklch(68% 0.12 45);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+/* Smooth scroll & theme transition */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Selection */
+::selection {
+  @apply bg-primary/15 text-foreground;
+}
+
+.dark ::selection {
+  @apply bg-primary/30 text-foreground;
+}
+
+@theme {
+  --font-sans: "Pretendard Variable", "Pretendard", -apple-system,
+    BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI",
+    "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono",
+    Menlo, Consolas, "Liberation Mono", monospace;
+}
+
+/* rehype-pretty-code theme switching */
+[data-rehype-pretty-code-figure] pre {
+  @apply border border-gray-200 dark:border-gray-800 rounded-lg overflow-x-auto shadow-sm;
+  background-color: var(--shiki-light-bg, #fafafa) !important;
+}
+
+.dark [data-rehype-pretty-code-figure] pre {
+  background-color: var(--shiki-dark-bg, #161b22) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+[data-rehype-pretty-code-figure] code {
+  @apply text-sm leading-relaxed;
+  counter-reset: line;
+}
+
+[data-rehype-pretty-code-figure] code > [data-line] {
+  @apply px-4 border-l-2 border-transparent;
+}
+
+[data-rehype-pretty-code-figure] code > [data-line]::before {
+  counter-increment: line;
+  content: counter(line);
+  @apply inline-block w-4 mr-4 text-right text-muted-foreground/50;
+  font-size: 0.75rem;
+}
+
+[data-rehype-pretty-code-figure] code > [data-highlighted-line] {
+  background-color: rgba(191, 219, 254, 0.5) !important; /* blue-200/50 */
+  @apply border-l-2 border-l-blue-500 dark:border-l-blue-400;
+}
+
+.dark [data-rehype-pretty-code-figure] code > [data-highlighted-line] {
+  background-color: rgba(30, 58, 138, 0.3) !important; /* blue-900/30 */
+}
+
+/* Inline code blocks (single line, no figure wrapper) hide line numbers */
+[data-rehype-pretty-code-figure] code[data-line-numbers-max-digits="1"] > [data-line]::before {
+  @apply w-2;
+}
+
+/* Code block title (filename) */
+[data-rehype-pretty-code-title] {
+  @apply rounded-t-lg border border-b-0 border-gray-200 dark:border-gray-800 bg-gray-100/80 dark:bg-gray-800/60 px-4 py-2 text-xs font-mono text-gray-500 dark:text-gray-400;
+}
+
+[data-rehype-pretty-code-title] + pre {
+  @apply rounded-t-none;
+}
+
+/* Shiki dual theme: CSS variable approach (rehype-pretty-code v0.14+) */
+[data-rehype-pretty-code-figure] code span {
+  color: var(--shiki-light) !important;
+  background-color: var(--shiki-light-bg, transparent) !important;
+}
+
+.dark [data-rehype-pretty-code-figure] code span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg, transparent) !important;
+}
+
+[data-rehype-pretty-code-figure] code > [data-highlighted-line] span {
+  background-color: transparent !important;
+}
+
+/* Inline code */
+:not(pre) > code {
+  @apply bg-muted rounded px-1.5 py-0.5 text-sm font-mono text-foreground;
+}
+
+/* Prose overrides */
+.prose {
+  --tw-prose-links: var(--primary);
+  --tw-prose-hr: var(--border);
+}
+
+.prose blockquote {
+  border-left-color: var(--border);
+  font-style: normal;
+}
+
+.prose hr {
+  border-color: var(--border);
+}
+
+/* Prose dark mode overrides */
+.dark .prose {
+  --tw-prose-body: var(--foreground);
+  --tw-prose-headings: var(--foreground);
+  --tw-prose-links: var(--primary);
+  --tw-prose-bold: var(--foreground);
+  --tw-prose-counters: var(--muted-foreground);
+  --tw-prose-bullets: var(--muted-foreground);
+  --tw-prose-hr: var(--border);
+  --tw-prose-quotes: var(--foreground);
+  --tw-prose-quote-borders: var(--border);
+  --tw-prose-code: var(--foreground);
+  --tw-prose-pre-bg: var(--secondary);
+  --tw-prose-th-borders: var(--border);
+  --tw-prose-td-borders: var(--border);
+}
+
+/* Anchor links (wrap mode: entire heading text is inside anchor) */
+.anchor {
+  @apply no-underline;
+  color: inherit;
+}
+
+/* Focus styles */
+:focus-visible {
+  @apply outline-2 outline-offset-2 outline-ring;
+}

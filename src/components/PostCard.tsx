@@ -6,9 +6,12 @@ export function PostCard({ post }: { post: Post }) {
   const { slug, frontmatter } = post;
 
   return (
-    <article className="py-6 -mx-3 px-3 rounded-lg hover:bg-muted/50">
-      <Link href={`/blog/${slug}`} className="group">
-        <h2 className="text-lg font-semibold group-hover:text-primary">
+    <article className="relative py-6 -mx-3 px-3 rounded-lg hover:bg-muted/50 focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 focus-within:ring-offset-background">
+      <Link
+        href={`/blog/${slug}`}
+        className="group after:absolute after:inset-0 after:content-[''] focus-visible:outline-none"
+      >
+        <h2 className="text-lg font-semibold group-hover:text-primary group-focus-visible:text-primary">
           {frontmatter.title}
         </h2>
       </Link>
@@ -20,7 +23,12 @@ export function PostCard({ post }: { post: Post }) {
             day: "numeric",
           })}
         </time>
-        {frontmatter.readingTime && <span>· {frontmatter.readingTime}</span>}
+        {frontmatter.readingTime && (
+          <>
+            <span aria-hidden="true">·</span>
+            <span>{frontmatter.readingTime}</span>
+          </>
+        )}
       </div>
       {frontmatter.description && (
         <p className="mt-2 text-muted-foreground leading-relaxed">
@@ -28,7 +36,7 @@ export function PostCard({ post }: { post: Post }) {
         </p>
       )}
       {frontmatter.tags?.length > 0 && (
-        <div className="mt-3 flex flex-wrap gap-2">
+        <div className="relative z-10 mt-3 flex flex-wrap gap-2">
           {frontmatter.tags.map((tag) => (
             <TagBadge key={tag} tag={tag} />
           ))}

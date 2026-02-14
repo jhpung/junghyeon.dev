@@ -8,6 +8,8 @@ import { SITE_NAME, SITE_URL } from "@/lib/constants";
 import { extractToc } from "@/lib/toc";
 import { TableOfContents } from "@/components/TableOfContents";
 import { Comments } from "@/components/Comments";
+import { ScrollProgress } from "@/components/ScrollProgress";
+import { CopyButton } from "@/components/CopyButton";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -63,6 +65,7 @@ export default async function BlogPostPage({ params }: PageProps) {
 
   return (
     <>
+      <ScrollProgress />
       <article>
         <header className="mb-8">
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
@@ -77,7 +80,10 @@ export default async function BlogPostPage({ params }: PageProps) {
               })}
             </time>
             {post.frontmatter.readingTime && (
-              <span>· {post.frontmatter.readingTime}</span>
+              <>
+                <span aria-hidden="true">·</span>
+                <span>{post.frontmatter.readingTime}</span>
+              </>
             )}
           </div>
           {post.frontmatter.tags?.length > 0 && (
@@ -94,6 +100,8 @@ export default async function BlogPostPage({ params }: PageProps) {
         <div className="prose prose-gray dark:prose-invert max-w-none">
           {content}
         </div>
+
+        <CopyButton />
 
         <hr className="my-12" />
         <Comments />

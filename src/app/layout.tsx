@@ -48,9 +48,20 @@ export default function RootLayout({
       </head>
       <body className="bg-background text-foreground antialiased">
         <ThemeProvider>
+          <a
+            href="#main-content"
+            className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:bg-background focus:px-4 focus:py-2 focus:rounded-md focus:border focus:border-border focus:text-foreground"
+          >
+            본문으로 건너뛰기
+          </a>
           <div className="mx-auto max-w-2xl px-3 sm:px-4">
             <Header />
-            <main className="min-h-[60vh] py-8">{children}</main>
+            <main
+              id="main-content"
+              className="min-h-[60vh] py-8 animate-page-enter"
+            >
+              {children}
+            </main>
             <Footer />
           </div>
         </ThemeProvider>

@@ -55,7 +55,7 @@ export function Mermaid({ chart }: { chart: string }) {
       try {
         const { svg: rendered } = await mermaid.render(
           `mermaid-${id}`,
-          chart.trim()
+          chart.trim(),
         );
         if (!cancelled) setSvg(rendered);
       } catch {
@@ -80,6 +80,8 @@ export function Mermaid({ chart }: { chart: string }) {
   return (
     <div
       ref={containerRef}
+      role="img"
+      aria-label="다이어그램"
       className="my-6 flex justify-center [&>svg]:max-w-full"
       dangerouslySetInnerHTML={{ __html: svg }}
     />

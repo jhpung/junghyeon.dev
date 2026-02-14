@@ -6,12 +6,7 @@ import { Menu } from "lucide-react";
 import { SITE_NAME } from "@/lib/constants";
 import { ThemeToggle } from "./ThemeToggle";
 import { Button } from "./ui/button";
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-  SheetTitle,
-} from "./ui/sheet";
+import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "./ui/sheet";
 
 const navLinks = [
   { href: "/blog", label: "블로그" },
@@ -46,7 +41,10 @@ export function Header() {
       </Link>
 
       {/* Desktop nav */}
-      <nav className="hidden sm:flex items-center gap-6">
+      <nav
+        aria-label="메인 네비게이션"
+        className="hidden sm:flex items-center gap-6"
+      >
         {navLinks.map((link) => (
           <Link
             key={link.href}

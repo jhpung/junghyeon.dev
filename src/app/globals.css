@@ -29,6 +29,8 @@ summary {
     --muted-foreground: oklch(45% 0.01 55);
     --accent: oklch(93% 0.01 85);
     --accent-foreground: oklch(25% 0.015 55);
+    --popover: oklch(98% 0.006 85);
+    --popover-foreground: oklch(25% 0.015 55);
     --destructive: oklch(55% 0.2 25);
     --border: oklch(89% 0.01 85);
     --input: oklch(89% 0.01 85);
@@ -49,6 +51,8 @@ summary {
     --muted-foreground: oklch(60% 0.01 55);
     --accent: oklch(24% 0.01 55);
     --accent-foreground: oklch(88% 0.008 85);
+    --popover: oklch(19% 0.01 55);
+    --popover-foreground: oklch(90% 0.008 85);
     --destructive: oklch(60% 0.2 25);
     --border: oklch(30% 0.01 55);
     --input: oklch(30% 0.01 55);
@@ -68,6 +72,8 @@ summary {
     --color-muted-foreground: var(--muted-foreground);
     --color-accent: var(--accent);
     --color-accent-foreground: var(--accent-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
     --color-destructive: var(--destructive);
     --color-border: var(--border);
     --color-input: var(--input);

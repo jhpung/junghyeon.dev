@@ -27,12 +27,16 @@ export default function AboutPage() {
         <li>
           GitHub:{" "}
           <a
-            href="https://github.com/pungjunghyeon"
+            href="https://github.com/jhpung"
             target="_blank"
             rel="noopener noreferrer"
           >
-            @pungjunghyeon
+            @jhpung
           </a>
+        </li>
+        <li>
+          이메일:{" "}
+          <a href="mailto:jhpung.dev@gmail.com">jhpung.dev@gmail.com</a>
         </li>
       </ul>
     </div>

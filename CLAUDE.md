@@ -62,9 +62,41 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 
 ---
 
+## 5. Project Conventions
+
+디자인 시스템 상세: `DESIGN_SYSTEM.md` 참조.
+
+### Tech Stack
+- Next.js 15 (App Router, RSC) / TypeScript
+- Tailwind CSS v4 (CSS-based config, no tailwind.config.ts)
+- shadcn/ui (new-york style) + Radix UI
+- MDX via `next-mdx-remote` + rehype-pretty-code (Shiki)
+- `next-themes` (class 기반 다크모드)
+- pnpm
+
+### Styling Rules
+- 색상은 CSS 변수 토큰 사용: `bg-primary`, `text-muted-foreground`, `border-border` 등
+- 하드코딩된 색상값 사용 금지 (예: `text-gray-500` 대신 `text-muted-foreground`)
+- 코드블록 스타일은 rehype-pretty-code가 처리 — 직접 스타일링하지 않음
+- 새 UI 컴포넌트는 shadcn/ui CLI(`pnpm dlx shadcn@latest add`)로 추가
+- `cn()` 유틸리티로 조건부 클래스 병합
+
+### Component Patterns
+- 서버 컴포넌트 기본. 클라이언트 상태/브라우저 API 필요 시에만 `"use client"`
+- 테마 연동이 필요한 클라이언트 컴포넌트는 `useTheme()`의 `resolvedTheme` 사용
+- variant가 있는 컴포넌트는 CVA(`class-variance-authority`) 패턴 따르기
+- 아이콘: `lucide-react` 사용
+
+### File Organization
+- 페이지: `src/app/`
+- 컴포넌트: `src/components/` (shadcn/ui → `src/components/ui/`)
+- 유틸/타입: `src/lib/`
+- MDX 콘텐츠: `content/posts/`
+
+### Layout
+- 최대 너비 `max-w-2xl` (672px), 중앙 정렬
+- 한국어 UI (`lang="ko"`)
+
+---
+
 **These guidelines are working if:** fewer unnecessary changes in diffs, fewer rewrites due to overcomplication, and clarifying questions come before implementation rather than after mistakes.
-
-
-<claude-mem-context>
-
-</claude-mem-context>

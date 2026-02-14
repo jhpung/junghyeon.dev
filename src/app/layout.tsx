@@ -48,7 +48,7 @@ export default function RootLayout({
       </head>
       <body className="bg-background text-foreground antialiased">
         <ThemeProvider>
-          <div className="mx-auto max-w-2xl px-4">
+          <div className="mx-auto max-w-2xl px-3 sm:px-4">
             <Header />
             <main className="min-h-[60vh] py-8">{children}</main>
             <Footer />

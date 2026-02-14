@@ -31,7 +31,7 @@ export default async function TagPage({ params }: PageProps) {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold tracking-tight mb-8">#{decoded}</h1>
+      <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-8">#{decoded}</h1>
       <PostList posts={posts} />
     </div>
   );

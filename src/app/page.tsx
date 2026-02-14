@@ -9,7 +9,7 @@ export default function HomePage() {
   return (
     <div>
       <section className="py-8">
-        <h1 className="text-3xl font-bold tracking-tight">안녕하세요</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">안녕하세요</h1>
         <p className="mt-4 text-muted-foreground leading-relaxed">
           {SITE_DESCRIPTION}
         </p>

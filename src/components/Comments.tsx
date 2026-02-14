@@ -9,9 +9,9 @@ export function Comments() {
   return (
     <Giscus
       repo="jhpung/junghyeon.dev"
-      repoId=""
+      repoId="R_kgDORQAi3w"
       category="Announcements"
-      categoryId=""
+      categoryId="DIC_kwDORQAi384C2ZyM"
       mapping="pathname"
       reactionsEnabled="1"
       emitMetadata="0"

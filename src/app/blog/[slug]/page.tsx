@@ -63,10 +63,9 @@ export default async function BlogPostPage({ params }: PageProps) {
 
   return (
     <>
-      <TableOfContents items={toc} />
       <article>
         <header className="mb-8">
-          <h1 className="text-3xl font-bold tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
             {post.frontmatter.title}
           </h1>
           <div className="mt-2 flex items-center gap-2 text-sm text-muted-foreground">
@@ -89,6 +88,8 @@ export default async function BlogPostPage({ params }: PageProps) {
             </div>
           )}
         </header>
+
+        <TableOfContents items={toc} />
 
         <div className="prose prose-gray dark:prose-invert max-w-none">
           {content}

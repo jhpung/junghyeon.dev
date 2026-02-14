@@ -26,21 +26,21 @@
 }
 
 .dark {
-  --background: oklch(17% 0.01 55);
-  --foreground: oklch(90% 0.008 85);
-  --card: oklch(19% 0.01 55);
-  --card-foreground: oklch(90% 0.008 85);
+  --background: oklch(17% 0.004 55);
+  --foreground: oklch(90% 0.004 85);
+  --card: oklch(19% 0.004 55);
+  --card-foreground: oklch(90% 0.004 85);
   --primary: oklch(68% 0.12 45);
-  --primary-foreground: oklch(17% 0.01 55);
-  --secondary: oklch(24% 0.01 55);
-  --secondary-foreground: oklch(88% 0.008 85);
-  --muted: oklch(24% 0.01 55);
-  --muted-foreground: oklch(60% 0.008 55);
-  --accent: oklch(24% 0.01 55);
-  --accent-foreground: oklch(88% 0.008 85);
+  --primary-foreground: oklch(17% 0.004 55);
+  --secondary: oklch(24% 0.004 55);
+  --secondary-foreground: oklch(88% 0.004 85);
+  --muted: oklch(24% 0.004 55);
+  --muted-foreground: oklch(60% 0.004 55);
+  --accent: oklch(24% 0.004 55);
+  --accent-foreground: oklch(88% 0.004 85);
   --destructive: oklch(60% 0.2 25);
-  --border: oklch(30% 0.01 55);
-  --input: oklch(30% 0.01 55);
+  --border: oklch(30% 0.004 55);
+  --input: oklch(30% 0.004 55);
   --ring: oklch(68% 0.12 45);
 }
 
@@ -96,38 +96,40 @@ body {
 
 /* rehype-pretty-code theme switching */
 [data-rehype-pretty-code-figure] pre {
-  @apply border border-gray-200 dark:border-gray-800 rounded-lg overflow-x-auto shadow-sm;
-  background-color: var(--shiki-light-bg, #fafafa) !important;
+  @apply border border-border rounded-lg overflow-x-auto;
+  background-color: var(--shiki-light-bg, var(--card)) !important;
+  box-shadow: 0 1px 3px oklch(0% 0 0 / 0.06);
 }
 
 .dark [data-rehype-pretty-code-figure] pre {
-  background-color: var(--shiki-dark-bg, #161b22) !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  background-color: var(--shiki-dark-bg, var(--card)) !important;
+  box-shadow: 0 2px 8px oklch(0% 0 0 / 0.3);
 }
 
 [data-rehype-pretty-code-figure] code {
-  @apply text-sm leading-relaxed;
+  @apply text-xs sm:text-sm leading-relaxed;
   counter-reset: line;
 }
 
 [data-rehype-pretty-code-figure] code > [data-line] {
-  @apply px-4 border-l-2 border-transparent;
+  @apply px-2 sm:px-4 border-l-2 border-transparent;
 }
 
 [data-rehype-pretty-code-figure] code > [data-line]::before {
   counter-increment: line;
   content: counter(line);
-  @apply inline-block w-4 mr-4 text-right text-muted-foreground/50;
+  @apply inline-block w-3 mr-2 sm:w-4 sm:mr-4 text-right text-muted-foreground/50;
   font-size: 0.75rem;
 }
 
 [data-rehype-pretty-code-figure] code > [data-highlighted-line] {
-  background-color: rgba(191, 219, 254, 0.5) !important; /* blue-200/50 */
-  @apply border-l-2 border-l-blue-500 dark:border-l-blue-400;
+  background-color: oklch(55% 0.12 45 / 0.1) !important;
+  @apply border-l-2;
+  border-left-color: var(--primary);
 }
 
 .dark [data-rehype-pretty-code-figure] code > [data-highlighted-line] {
-  background-color: rgba(30, 58, 138, 0.3) !important; /* blue-900/30 */
+  background-color: oklch(68% 0.12 45 / 0.12) !important;
 }
 
 /* Inline code blocks (single line, no figure wrapper) hide line numbers */
@@ -137,7 +139,7 @@ body {
 
 /* Code block title (filename) */
 [data-rehype-pretty-code-title] {
-  @apply rounded-t-lg border border-b-0 border-gray-200 dark:border-gray-800 bg-gray-100/80 dark:bg-gray-800/60 px-4 py-2 text-xs font-mono text-gray-500 dark:text-gray-400;
+  @apply rounded-t-lg border border-b-0 border-border bg-secondary/80 px-4 py-2 text-xs font-mono text-muted-foreground;
 }
 
 [data-rehype-pretty-code-title] + pre {

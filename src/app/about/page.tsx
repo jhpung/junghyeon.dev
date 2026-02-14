@@ -15,7 +15,7 @@ import { Cloud } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "소개",
-  description: "소프트웨어 엔지니어 Junghyeon 소개",
+  description: "소프트웨어 엔지니어 풍중현 소개",
 };
 
 type IconComponent = ComponentType<

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Code, Lightbulb, Pencil } from "lucide-react";
+import { Code, Coffee, Lightbulb, Pencil } from "lucide-react";
 import { getAllPosts } from "@/lib/posts";
 import { PostList } from "@/components/PostList";
 import { SITE_DESCRIPTION } from "@/lib/constants";
@@ -20,7 +20,7 @@ export default function HomePage() {
         />
         <p className="text-sm font-mono text-primary mb-3">$ whoami</p>
         <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
-          안녕하세요
+          6년차 소프트웨어 엔지니어 풍중현입니다.
         </h1>
         <p className="mt-4 text-muted-foreground leading-relaxed max-w-lg">
           {SITE_DESCRIPTION}
@@ -37,6 +37,10 @@ export default function HomePage() {
           <span className="inline-flex items-center gap-1.5">
             <Pencil className="h-4 w-4 text-primary" />
             실험
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <Coffee className="h-4 w-4 text-primary" />
+            일상
           </span>
         </div>
       </section>

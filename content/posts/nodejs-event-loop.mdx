@@ -570,8 +570,6 @@ function asyncSum(n, callback) {
 
 **오프로딩(Offloading)** — CPU 집약적 작업은 `Worker Threads` 나 `Child Process` 로 이벤트 루프 밖에서 처리합니다. 단, 직렬화/역직렬화 비용이 발생하므로 작업의 복잡도가 이 비용을 상쇄할 만큼 클 때 사용합니다.
 
-> Node.js는 I/O 바운드 작업에 탁월합니다. 하지만 CPU 집약적 연산이 핵심이라면 Node.js가 최선의 선택인지 재고해야 합니다. 이벤트 루프는 클라이언트 요청을 **조율** 하는 역할이지, 직접 **수행** 하는 역할이 아닙니다.
-
 ## 참고
 
 - https://nodejs.org/ko/learn/asynchronous-work/dont-block-the-event-loop

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { ScrollToTop } from "@/components/ScrollToTop";
 import { SITE_NAME, SITE_URL, SITE_DESCRIPTION } from "@/lib/constants";
 import "./globals.css";
 
@@ -20,11 +21,17 @@ export const metadata: Metadata = {
     locale: "ko_KR",
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+  },
   robots: {
     index: true,
     follow: true,
   },
   alternates: {
+    canonical: SITE_URL,
     types: {
       "application/rss+xml": "/feed.xml",
     },
@@ -64,6 +71,7 @@ export default function RootLayout({
             </main>
             <Footer />
           </div>
+          <ScrollToTop />
         </ThemeProvider>
       </body>
     </html>

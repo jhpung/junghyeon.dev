@@ -15,15 +15,46 @@ function TocList({
   onItemClick?: () => void;
   showIndicator?: boolean;
 }) {
+  const listRef = useRef<HTMLUListElement>(null);
+  const [indicatorStyle, setIndicatorStyle] = useState({
+    top: 0,
+    height: 0,
+    opacity: 0,
+  });
+
+  useEffect(() => {
+    if (!showIndicator || !listRef.current || !activeId) {
+      setIndicatorStyle((s) => ({ ...s, opacity: 0 }));
+      return;
+    }
+
+    const activeLink = listRef.current.querySelector<HTMLElement>(
+      `a[href="#${CSS.escape(activeId)}"]`,
+    );
+    if (!activeLink) {
+      setIndicatorStyle((s) => ({ ...s, opacity: 0 }));
+      return;
+    }
+
+    const listRect = listRef.current.getBoundingClientRect();
+    const linkRect = activeLink.getBoundingClientRect();
+    setIndicatorStyle({
+      top: linkRect.top - listRect.top,
+      height: linkRect.height,
+      opacity: 1,
+    });
+  }, [activeId, showIndicator, items]);
+
   return (
-    <ul className="relative space-y-1.5 text-sm">
+    <ul ref={listRef} className="relative space-y-1.5 text-sm">
       {showIndicator && (
         <li
           aria-hidden="true"
-          className="absolute left-0 w-0.5 h-5 bg-primary rounded-full transition-all duration-300 ease-out"
+          className="absolute left-0 w-0.5 bg-primary rounded-full transition-all duration-300 ease-out pointer-events-none"
           style={{
-            top: `${items.findIndex((i) => i.id === activeId) * 28}px`,
-            opacity: activeId ? 1 : 0,
+            top: `${indicatorStyle.top}px`,
+            height: `${indicatorStyle.height}px`,
+            opacity: indicatorStyle.opacity,
           }}
         />
       )}

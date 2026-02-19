@@ -4,6 +4,7 @@ export interface PostFrontmatter {
   description: string;
   tags: string[];
   published: boolean;
+  image?: string;
   readingTime?: string;
 }
 

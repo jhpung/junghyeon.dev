@@ -430,66 +430,6 @@ console.log('7: 동기 코드');
 
 동기 코드가 먼저, 그 직후 `nextTickQueue` → 마이크로태스크 큐(`Promise`)가 실행되고, 그다음 이벤트 루프 페이즈 순서에 따라 페이즈 콜백이 처리됩니다. 각 페이즈 콜백 실행 후에도 `nextTickQueue` 와 마이크로태스크 큐를 다시 확인합니다.
 
-### 콜 스택이 빈 후 처리 흐름
-
-아래 다이어그램은 콜 스택이 비워진 후 nextTickQueue, 마이크로태스크 큐, 그리고 이벤트 루프 각 페이즈가 어떤 조건으로 실행되는지를 보여줍니다.
-
-```mermaid
-flowchart TB
-    START(["시작: 콜 스택 비워짐"]) --> NTQ{"nextTickQueue<br/>비어있는가?"}
-    NTQ -- "아니오" --> NTE["nextTick 콜백 모두 실행"]
-    NTE --> NTQ
-    NTQ -- "예" --> MQ{"마이크로태스크 큐<br/>비어있는가?"}
-    MQ -- "아니오" --> ME["마이크로태스크 모두 실행"]
-    ME --> NTQ
-    MQ -- "예" --> TIMERS
-
-    subgraph LOOP["이벤트 루프 (libuv)"]
-        TIMERS["⏱️ Timers"]
-        TIMERS_C{"만료된<br/>타이머 있는가?"}
-        TIMERS --> TIMERS_C
-        TIMERS_C -- "예" --> TIMERS_E["콜백 실행<br/>→ nextTick + 마이크로태스크 처리<br/>→ 한도 도달 시 다음 페이즈"]
-        TIMERS_E --> TIMERS_C
-        TIMERS_C -- "아니오" --> PENDING
-
-        PENDING["⏳ Pending"]
-        PENDING_C{"지연된 I/O<br/>콜백 있는가?"}
-        PENDING --> PENDING_C
-        PENDING_C -- "예" --> PENDING_E["콜백 실행<br/>→ nextTick + 마이크로태스크 처리"]
-        PENDING_E --> PENDING_C
-        PENDING_C -- "아니오" --> POLL
-
-        POLL["📡 Poll"]
-        POLL_C{"Poll 큐에<br/>콜백 있는가?"}
-        POLL --> POLL_C
-        POLL_C -- "예" --> POLL_E["콜백 실행<br/>→ nextTick + 마이크로태스크 처리<br/>→ 한도 도달 시 다음 페이즈"]
-        POLL_E --> POLL_C
-        POLL_C -- "아니오" --> POLL_D{"setImmediate<br/>예약 있는가?"}
-        POLL_D -- "예" --> CHECK
-        POLL_D -- "아니오" --> POLL_T{"만료 예정<br/>타이머 있는가?"}
-        POLL_T -- "예 (threshold 도달)" --> CHECK
-        POLL_T -- "아니오" --> POLL_W["새 I/O 이벤트 대기<br/>(가장 가까운 타이머까지)"]
-        POLL_W --> POLL_C
-
-        CHECK["✅ Check"]
-        CHECK_C{"setImmediate<br/>콜백 있는가?"}
-        CHECK --> CHECK_C
-        CHECK_C -- "예" --> CHECK_E["콜백 모두 실행<br/>→ nextTick + 마이크로태스크 처리"]
-        CHECK_E --> CHECK_C
-        CHECK_C -- "아니오" --> CLOSE
-
-        CLOSE["🔒 Close"]
-        CLOSE_C{"close 이벤트<br/>콜백 있는가?"}
-        CLOSE --> CLOSE_C
-        CLOSE_C -- "예" --> CLOSE_E["콜백 모두 실행<br/>→ nextTick + 마이크로태스크 처리"]
-        CLOSE_E --> CLOSE_C
-        CLOSE_C -- "아니오" --> ALIVE
-    end
-
-    ALIVE{"활성 핸들/요청<br/>남아있는가?"} -- "예" --> TIMERS
-    ALIVE -- "아니오" --> EXIT(["프로세스 종료"])
-```
-
 ## 이벤트 루프 최적화 팁
 
 Node.js가 적은 수의 스레드로 많은 클라이언트를 처리할 수 있는 이유는 이벤트 루프와 워커 풀 구조 덕분입니다. 하지만 이는 곧 **스레드 하나가 블로킹되면 다른 모든 클라이언트가 대기한다** 는 의미이기도 합니다.

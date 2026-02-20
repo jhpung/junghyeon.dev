@@ -50,6 +50,67 @@ Node.js는 **메인 스레드 1개(이벤트 루프)** 와 **워커 풀(Worker P
 
 자바스크립트 엔진으로는 V8을 사용하고, 비동기 I/O 처리를 위해 libuv 라이브러리를 사용합니다.
 
+아래 다이어그램은 Node.js 내부 구조를 컴포넌트 수준에서 표현한 것입니다.
+
+```mermaid
+flowchart TB
+  subgraph Node["Node.js Runtime"]
+    direction TB
+
+    subgraph V8["V8 Engine"]
+      direction LR
+      CS["Call Stack\n(LIFO)"]
+      HEAP["Heap\n(메모리 할당)"]
+    end
+
+    subgraph MicroQueues["콜 스택이 빌 때마다 우선 처리"]
+      direction LR
+      NTQ["① nextTick Queue\n(process.nextTick)\n— 가장 높은 우선순위"]
+      MTQ["② Microtask Queue\n(Promise.then\nqueueMicrotask)"]
+      NTQ -->|"전부 비운 뒤"| MTQ
+    end
+
+    subgraph Libuv["libuv"]
+      direction TB
+
+      subgraph EventLoop["이벤트 루프 페이즈 (메인 스레드)"]
+        direction LR
+        TIMERS["Timers\n(setTimeout\nsetInterval)"]
+        PENDING["Pending\n(시스템 콜백)"]
+        IDLE["Idle / Prepare\n(내부 전용)"]
+        POLL["Poll\n(I/O 콜백)"]
+        CHECK["Check\n(setImmediate)"]
+        CLOSE["Close\n(소켓 종료)"]
+
+        TIMERS --> PENDING --> IDLE --> POLL --> CHECK --> CLOSE
+        CLOSE -.->|"다음 루프"| TIMERS
+      end
+
+      subgraph WP["워커 풀 (스레드풀)"]
+        direction LR
+        W1["파일 I/O"]
+        W2["DNS 조회"]
+        W3["암호화/압축"]
+      end
+    end
+  end
+
+  subgraph OS["OS Kernel"]
+    direction LR
+    EPOLL["I/O 멀티플렉싱\n(epoll / kqueue / IOCP)"]
+    NET["네트워크 I/O\n(TCP/UDP)"]
+  end
+
+  CS -->|"비동기 호출"| Libuv
+  EventLoop -->|"콜백 실행"| CS
+  CS -->|"콜 스택 비워짐"| MicroQueues
+  MicroQueues -->|"nextTick·microtask\n모두 처리 후\n다음 콜백 가져옴"| EventLoop
+
+  POLL <-->|"I/O 완료 알림"| EPOLL
+  WP -->|"작업 완료"| POLL
+  EPOLL <--> NET
+```
+
 ### 콜 스택
 
 V8은 Google이 개발한 오픈소스 자바스크립트 엔진으로, 자바스크립트 코드를 기계어로 컴파일하고 실행하는 역할을 합니다. Node.js는 이 V8 엔진 위에서 동작합니다.

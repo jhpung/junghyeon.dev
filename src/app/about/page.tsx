@@ -25,34 +25,38 @@ type IconComponent = ComponentType<
 interface TechItem {
   name: string;
   icon: IconComponent;
+  color: string;
 }
 
 const primaryStack: TechItem[] = [
-  { name: "JavaScript", icon: SiJavascript },
-  { name: "TypeScript", icon: SiTypescript },
-  { name: "Node.js", icon: SiNodedotjs },
-  { name: "PostgreSQL", icon: SiPostgresql },
-  { name: "MongoDB", icon: SiMongodb },
-  { name: "AWS", icon: Cloud as IconComponent },
-  { name: "Kubernetes", icon: SiKubernetes },
+  { name: "JavaScript", icon: SiJavascript, color: "#F7DF1E" },
+  { name: "TypeScript", icon: SiTypescript, color: "#3178C6" },
+  { name: "Node.js", icon: SiNodedotjs, color: "#5FA04E" },
+  { name: "PostgreSQL", icon: SiPostgresql, color: "#4169E1" },
+  { name: "MongoDB", icon: SiMongodb, color: "#47A248" },
+  { name: "AWS", icon: Cloud as IconComponent, color: "#FF9900" },
+  { name: "Kubernetes", icon: SiKubernetes, color: "#326CE5" },
 ];
 
 const experienceStack: TechItem[] = [
-  { name: "Python", icon: SiPython },
-  { name: "React", icon: SiReact },
-  { name: "Next.js", icon: SiNextdotjs },
-  { name: "React Native", icon: SiReact },
+  { name: "Python", icon: SiPython, color: "#3776AB" },
+  { name: "React", icon: SiReact, color: "#61DAFB" },
+  { name: "Next.js", icon: SiNextdotjs, color: "#888888" },
+  { name: "React Native", icon: SiReact, color: "#61DAFB" },
 ];
 
 function TechGrid({ items }: { items: TechItem[] }) {
   return (
     <div className="not-prose grid grid-cols-2 sm:grid-cols-3 gap-3 my-4">
-      {items.map(({ name, icon: Icon }) => (
+      {items.map(({ name, icon: Icon, color }) => (
         <div
           key={name}
-          className="flex items-center gap-2.5 rounded-lg border border-border px-3 py-2.5 text-sm"
+          className="group flex items-center gap-2.5 rounded-lg border border-border px-3 py-2.5 text-sm transition-all hover:border-border/80 hover:shadow-sm hover:-translate-y-0.5"
         >
-          <Icon className="h-5 w-5 shrink-0 text-muted-foreground" />
+          <Icon
+            className="h-5 w-5 shrink-0 transition-colors text-muted-foreground group-hover:text-[--icon-color]"
+            style={{ "--icon-color": color } as React.CSSProperties}
+          />
           <span className="text-foreground">{name}</span>
         </div>
       ))}

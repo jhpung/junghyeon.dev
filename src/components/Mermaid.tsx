@@ -123,7 +123,7 @@ export function Mermaid({ chart }: { chart: string }) {
               <X className="h-5 w-5" />
             </button>
             <div
-              className="relative max-h-[90vh] max-w-[90vw] cursor-zoom-out [&>svg]:max-w-full [&>svg]:max-h-[90vh]"
+              className="relative max-h-[90vh] max-w-[90vw] cursor-zoom-out [&>svg]:!w-[90vw] [&>svg]:!h-auto [&>svg]:max-h-[85vh]"
               dangerouslySetInnerHTML={{ __html: svg }}
               onClick={close}
             />

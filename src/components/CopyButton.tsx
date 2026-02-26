@@ -52,10 +52,43 @@ export function CopyButton() {
     const observer = new MutationObserver(addButtons);
     observer.observe(document.body, { childList: true, subtree: true });
 
+    // Typing animation: reveal lines one by one when code block enters viewport
+    function animateCodeBlock(figure: Element) {
+      if (figure.hasAttribute("data-code-animated")) return;
+      figure.setAttribute("data-code-animated", "");
+
+      const lines = figure.querySelectorAll<HTMLElement>("[data-line]");
+      if (lines.length === 0) return;
+
+      const delayPerLine = Math.min(40, 1200 / lines.length);
+      lines.forEach((line, i) => {
+        line.style.clipPath = "inset(0 100% 0 0)";
+        line.style.animation = `code-typing 0.3s ease-out ${i * delayPerLine}ms forwards`;
+      });
+    }
+
+    const animObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          animateCodeBlock(entry.target);
+          animObserver.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.1 },
+    );
+
+    document
+      .querySelectorAll("[data-rehype-pretty-code-figure]")
+      .forEach((figure) => {
+        animObserver.observe(figure);
+      });
+
     document.addEventListener("click", handleClick);
     return () => {
       document.removeEventListener("click", handleClick);
       observer.disconnect();
+      animObserver.disconnect();
     };
   }, []);
 

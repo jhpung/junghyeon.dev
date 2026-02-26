@@ -25,22 +25,23 @@ export default function HomePage() {
         <p className="mt-4 text-muted-foreground leading-relaxed max-w-lg">
           {SITE_DESCRIPTION}
         </p>
-        <div className="mt-6 flex flex-wrap gap-3 text-sm">
-          {[
-            { href: "/blog", icon: Code, label: "개발 노트" },
-            { href: "/blog", icon: Lightbulb, label: "학습 기록" },
-            { href: "/blog", icon: Pencil, label: "실험" },
-            { href: "/blog", icon: Coffee, label: "일상" },
-          ].map(({ href, icon: Icon, label }) => (
-            <Link
-              key={label}
-              href={href}
-              className="inline-flex items-center gap-1.5 rounded-full border border-border px-3 py-1.5 text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground hover:bg-primary/5"
-            >
-              <Icon className="h-3.5 w-3.5 text-primary" />
-              {label}
-            </Link>
-          ))}
+        <div className="mt-6 flex flex-wrap gap-4 text-sm text-muted-foreground">
+          <span className="inline-flex items-center gap-1.5">
+            <Code className="h-4 w-4 text-primary" />
+            개발 노트
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <Lightbulb className="h-4 w-4 text-primary" />
+            학습 기록
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <Pencil className="h-4 w-4 text-primary" />
+            실험
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <Coffee className="h-4 w-4 text-primary" />
+            일상
+          </span>
         </div>
       </section>
 
